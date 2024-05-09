@@ -1,11 +1,24 @@
 # Changelog
 
-## 0.14.0 (2024-04-22)
+## 0.14.0 (TBD)
 
 ### 🎉 New Features
 
 - Simplified Auth User API: Introduced a simpler API for accessing user auth fields (for example `username`, `email`, `isEmailVerified`) directly on the `user` object, eliminating the need for helper functions.
 - Improved API for calling Operations (Queries and Actions) directly.
+- Auth Hooks: you can now hook into the auth process with `onBeforeSignup`, `onAfterSignup` hooks. You can also modify the OAuth redirect URL with `onBeforeOAuthRedirect` hook and get the provider token with `onAfterOAuthTokenReceived` hook.
+
+  ```wasp
+  app myApp {
+    ...
+    auth: {
+      onBeforeSignup: import { onBeforeSignup } from "...",
+      onAfterSignup: import { onAfterSignup } from "...",
+      onBeforeOAuthRedirect: import { onBeforeOAuthRedirect } from "...",
+      onAfterOAuthTokenReceived: import { onAfterOAuthTokenReceived } from "...",
+    },
+  }
+  ```
 
 ### ⚠️ Breaking Changes & Migration Guide
 
@@ -62,6 +75,7 @@ These changes improve code readability and lower the complexity of accessing use
 These changes only apply to getting auth fields from the `user` object you receive from Wasp, for example in the `authRequired` enabled pages or `context.user` on the server. If you are fetching the user and auth fields with your own queries, you _can_ keep using most of the helpers. Read more [about using the auth helpers](https://wasp-lang.dev/docs/auth/entities#including-the-user-with-other-entities).
 
 ### 🐞 Bug fixes
+
 - Update the `tsconfig.json` to make sure IDEs don't underline `import.meta.env` when users use client env vars.
 
 ### 🔧 Small improvements
